@@ -10,6 +10,7 @@ def main():
         shift = int(input("Type the shift number:\n"))
         print(f"The {direction}d text is: {caesar(text=text, shift=shift, cipher_direction=direction)}")
         restart = input("Type 'yes' if you want to go again. Otherwise type 'no'.\n")
+    print("Goodbye")
 
 
 def caesar(text, shift, cipher_direction):
