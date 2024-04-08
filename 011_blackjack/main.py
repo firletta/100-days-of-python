@@ -21,14 +21,12 @@ def main():
     while not game_over:
         player_score = calculate_score(player_cards)
         computer_score = calculate_score(computer_cards)
-
-        print(f"Your cards: {player_cards}, current score: {player_score}")
-        print(f"Computer's first card: {computer_cards[0]}")
+        print(f"Your cards: {format_cards(player_cards)}\nCurrent score: {player_score}\n\nComputer's first card: {'|' + computer_cards[0] + '|'}\n")
 
         if player_score == 21 or computer_score == 21 or player_score > 21:
             game_over = True
         else:
-            should_continue = input("Type 'hit' to get another card, 'stand' to pass: ")
+            should_continue = input("Type 'hit' to get another card, 'stand' to pass:\n").lower().strip(" ")
             if should_continue == 'hit':
                 player_cards.append(deal_card())
             else:
@@ -38,15 +36,14 @@ def main():
         computer_cards.append(deal_card())
         computer_score = calculate_score(computer_cards)
 
-    print(f"Your final hand: {player_cards}, final score: {player_score}")
-    print(f"Computer's final hand: {computer_cards}, final score: {computer_score}")
+    print(f"\nYour final hand: {format_cards(player_cards)}\nFinal score: {player_score}\n\nComputer's final hand: {format_cards(computer_cards)}\nFinal score: {computer_score}")
 
     if player_score > 21 or (computer_score <= 21 and computer_score > player_score):
-        result = "You lose."
+        result = "\nYou lose."
     elif player_score == computer_score:
-        result = "It's a draw."
+        result = "\nIt's a draw."
     else:
-        result = "You win!"
+        result = "\nYou win!"
 
     print(result)
 
@@ -74,6 +71,9 @@ def calculate_score(hand):
         aces -= 1
 
     return score
+
+def format_cards(cards):
+    return '[' + ']['.join(cards) + ']'
 
 if __name__ == "__main__":
     main()
