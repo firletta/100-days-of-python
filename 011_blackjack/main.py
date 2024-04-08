@@ -2,7 +2,6 @@
 
 from art import logo
 import random
-import unicodedata
 
 
 SUITS = ['♣️', '♦️', '♥️', '♠️']
