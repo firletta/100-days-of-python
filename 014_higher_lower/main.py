@@ -14,6 +14,8 @@ def main():
         data.remove(a)
         b = random.choice(data)
         data.append(a)
+        if score > 0:
+            print(f"You're right! Current score: {score}")
         print(f"Compare A: {a['name']}, a {a['description']}, from {a['country']}.")
         print(vs)
         print(f"Against B: {b['name']}, a {b['description']}, from {b['country']}.")
@@ -21,7 +23,6 @@ def main():
         answer = 'a' if a['follower_count'] > b['follower_count'] else 'b'
         if guess == answer:
             score += 1
-            print(f"You're right! Current score: {score}")
             continue
         else:
             os.system('clear')
