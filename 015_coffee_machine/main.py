@@ -30,7 +30,7 @@ def main():
                 for ingredient in order_ingredients:
                     resources[ingredient] -= order_ingredients[ingredient]
                 profit += order_cost
-                print(f"Enjoy your {order}.")
+                print(f"Enjoy your {order}. ☕ ")
         elif order == "report":
             print(f"Water: {resources['water']}ml\n"
                   f"Milk: {resources['milk']}ml\n"
