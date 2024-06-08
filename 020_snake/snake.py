@@ -1,10 +1,9 @@
 from turtle import Turtle
 
-
 class Snake:
     """A class representing a snake in a game."""
 
-    COLOR = "pale green"
+    COLOR = "light green"
     SHAPE = "square"
     STARTING_LENGTH = 3
     STEP = 20
@@ -28,9 +27,9 @@ class Snake:
         """Create the initial snake."""
         for i in range(self.STARTING_LENGTH):
             self.turtles.append(
-                self._create_turtle(x=-self.STEP * i, y=0))
+                self.create_turtle(x=-self.STEP * i, y=0))
 
-    def _create_turtle(self, x, y):
+    def create_turtle(self, x, y):
         """Create a turtle at the given coordinates."""
         turtle = Turtle()
         turtle.shape(self.SHAPE)
@@ -43,3 +42,25 @@ class Snake:
         """Change the direction of the snake's movement."""
         if self.head.heading() != self.OPPOSITE_DIRECTIONS[direction]:
             self.head.setheading(self.DIRECTIONS[direction])
+
+    def extend(self):
+        """Extend the snake by one turtle."""
+        self.turtles.append(self.create_turtle(
+            x=self.turtles[-1].xcor(), y=self.turtles[-1].ycor()))
+
+    def is_collision_with_food(self, food, distance):
+        return self.head.distance(food) < distance
+
+    def is_collision_with_wall(self, screen_width, screen_height):
+        """Check if the snake collided with the wall."""
+        x = self.head.xcor()
+        y = self.head.ycor()
+        return x > screen_width / 2 or x < -screen_width / 2 or \
+               y > screen_height / 2 or y < -screen_height / 2
+
+    def is_collision_with_tail(self):
+        """Check if the snake collided with its tail."""
+        for turtle in self.turtles[1:]:
+            if self.head.distance(turtle) < 10:
+                return True
+        return False
