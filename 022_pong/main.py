@@ -28,30 +28,17 @@ KEY_BINDINGS = {
 }
 
 
-def setup_screen():
-    """Set up the game screen."""
-    screen = Screen()
-    screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
-    screen.bgcolor("black")
-    screen.title("Pong Game")
-    screen.tracer(0)
-    return screen
+def main():
+    """Main function to set up and start the game."""
+    screen = setup_screen()
+    net = Net()
+    paddles = {
+        RIGHT_PADDLE: Paddle(PADDLE_START_X, PADDLE_START_Y),
+        LEFT_PADDLE: Paddle(-PADDLE_START_X, PADDLE_START_Y)
+    }
+    ball = Ball()
+    scoreboard = Scoreboard()
 
-
-def handle_key_bindings(paddles):
-    """Handle the key bindings for the paddles."""
-    for paddle_name, bindings in KEY_BINDINGS.items():
-        for key, action in bindings.items():
-            if keyboard.is_pressed(key):
-                try:
-                    getattr(paddles[paddle_name], action)()
-                except AttributeError:
-                    print(
-                        f"Error: {paddle_name} does not have method {action}")
-
-
-def play_game(screen, paddles, ball, scoreboard):
-    """Play the game."""
     game_is_on = True
     while game_is_on:
         ball.move()
@@ -77,21 +64,29 @@ def play_game(screen, paddles, ball, scoreboard):
 
         screen.update()
 
-
-def main():
-    """Main function to set up and start the game."""
-    screen = setup_screen()
-    net = Net()
-    paddles = {
-        RIGHT_PADDLE: Paddle(PADDLE_START_X, PADDLE_START_Y),
-        LEFT_PADDLE: Paddle(-PADDLE_START_X, PADDLE_START_Y)
-    }
-    ball = Ball()
-    scoreboard = Scoreboard()
-
-    play_game(screen, paddles, ball, scoreboard)
-
     screen.exitonclick()
+
+
+def setup_screen():
+    """Set up the game screen."""
+    screen = Screen()
+    screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
+    screen.bgcolor("black")
+    screen.title("Pong Game")
+    screen.tracer(0)
+    return screen
+
+
+def handle_key_bindings(paddles):
+    """Handle the key bindings for the paddles."""
+    for paddle_name, bindings in KEY_BINDINGS.items():
+        for key, action in bindings.items():
+            if keyboard.is_pressed(key):
+                try:
+                    getattr(paddles[paddle_name], action)()
+                except AttributeError:
+                    print(
+                        f"Error: {paddle_name} does not have method {action}")
 
 
 if __name__ == "__main__":
