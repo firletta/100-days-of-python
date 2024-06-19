@@ -27,3 +27,8 @@ class Scoreboard(Turtle):
         self.goto(self.SCOREBOARD_POSITION)
         self.score += 1
         self.write(f"Score: {self.score}", align="left", font=self.SCOREBOARD_FONT)
+
+    def game_over(self):
+        """Display the game over message."""
+        self.goto(0, 0)
+        self.write("Game Over", align="center", font=self.SCOREBOARD_FONT)

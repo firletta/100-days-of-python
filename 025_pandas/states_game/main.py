@@ -53,6 +53,9 @@ class Game:
                 prompt = "State's name:"
             else:
                 prompt = "State not found. Try again:"
+            if self.scoreboard.score == len(STATE_NAMES):
+                game_is_on = False
+                self.scoreboard.game_over()
 
         turtle.update()
         turtle.mainloop()
