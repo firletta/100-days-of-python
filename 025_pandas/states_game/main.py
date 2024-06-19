@@ -17,6 +17,7 @@ class Game:
         self.screen = turtle.Screen()
         self.scoreboard = Scoreboard()
         self.setup_screen()
+        self.guessed_states = []
 
     def setup_screen(self):
         """Set up the turtle screen."""
@@ -26,7 +27,21 @@ class Game:
 
     def state_exists(self, state_name):
         """Check if a state exists."""
-        return state_name.rstrip().title() in STATE_NAMES
+        if state_name.rstrip().title() in STATE_NAMES:
+            self.guessed_states.append(state_name.rstrip().title())
+            return True
+        return False
+
+    def save_states_to_learn(self):
+        """Save the states to learn to a CSV file."""
+        states_to_learn = [state for state in STATE_NAMES if state not in self.guessed_states]
+        states_to_learn_data_frame = pandas.DataFrame(states_to_learn, columns=['state'])
+        states_to_learn_data_frame.to_csv('states_to_learn.csv', index=False)
+
+    def game_over(self):
+        """End the game and save the states to learn."""
+        self.save_states_to_learn()
+        # Add any other game over logic here
 
     def show_state_on_map(self, state_name):
         """Show a state on the map."""
@@ -45,6 +60,7 @@ class Game:
         while game_is_on:
             state_guess = self.screen.textinput(title=" Guess the State", prompt=prompt)
             if state_guess is None:
+                self.save_states_to_learn()
                 break
             state_guess = state_guess.title()
             if self.state_exists(state_guess):
