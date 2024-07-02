@@ -51,8 +51,9 @@ class PomodoroApp:
             self.canvas.itemconfig(self.timer_text, text=f"{mins:02d}:{secs:02d}")
             self.timer_after_id = self.root.after(1000, self.update_timer)
         else:
-            self.start_next_session()
             self.update_checkmarks()
+            self.start_next_session()
+            
 
     def start_timer(self):
         if not self.is_timer_running:
@@ -67,20 +68,20 @@ class PomodoroApp:
             if self.timer_after_id:
                 self.root.after_cancel(self.timer_after_id)
             self.canvas.itemconfig(self.timer_text, text="00:00")
-            self.timer_label.config(text="Timer")
+            self.timer_label.config(text="Timer", fg=GREEN)
             self.checkmarks_label.config(text="")
             self.session_count = 0
 
     def set_timer_session(self):
         if self.session_count % 8 == 0:
             self.timer_seconds = LONG_BREAK_MIN * 60
-            self.timer_label.config(text="Long Break")
+            self.timer_label.config(text="Long Break", fg=RED)
         elif self.session_count % 2 == 0:
             self.timer_seconds = SHORT_BREAK_MIN * 60
-            self.timer_label.config(text="Short Break")
+            self.timer_label.config(text="Short Break", fg=PINK)
         else:
             self.timer_seconds = WORK_MIN * 60
-            self.timer_label.config(text="Work Time")
+            self.timer_label.config(text="Work Time", fg=GREEN)
             self.focus_time_count += 1
 
     def start_next_session(self):
