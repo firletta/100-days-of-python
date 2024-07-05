@@ -27,7 +27,7 @@ class PomodoroApp:
         self.timer_label = Label(self.root, text="Timer", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 42, "bold"))
         self.timer_label.grid(column=1, row=0)
 
-        self.tomato_img = PhotoImage(file="tomato.png")  # Ensure tomato.png is in your project directory
+        self.tomato_img = PhotoImage(file="tomato.png")
         self.canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
         self.canvas.create_image(100, 112, image=self.tomato_img)
         self.timer_text = self.canvas.create_text(100, 130, text="00:00", fill="white", font=(FONT_NAME, 32, "bold"))
@@ -95,7 +95,7 @@ class PomodoroApp:
 
 def main():
     root = Tk()
-    app = PomodoroApp(root)
+    PomodoroApp(root)
     root.mainloop()
 
 if __name__ == "__main__":
