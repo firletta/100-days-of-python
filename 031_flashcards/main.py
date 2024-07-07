@@ -9,9 +9,16 @@ class FlashCardApp:
         self.master = master
         self.master.title("Flash Cards")
         self.master.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
-        self.words = pd.read_csv("data/french_words.csv").to_dict(orient="records")
+        self.words = self.read_words_to_learn()
         self.current_card = {}
+        self.timer = self.master.after(3000, self.flip_card)
         self.setup_ui()
+
+    def read_words_to_learn(self):
+        try:
+            return pd.read_csv("data/words_to_learn.csv").to_dict(orient="records")
+        except FileNotFoundError:
+            return pd.read_csv("data/french_words.csv").to_dict(orient="records")
 
     def setup_ui(self):
         self.canvas = tk.Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
@@ -33,10 +40,11 @@ class FlashCardApp:
         return button
 
     def show_card(self):
+        self.master.after_cancel(self.timer)
         if self.words:
             self.current_card = random.choice(self.words)
             self.update_canvas("French", self.current_card["French"], self.card_front_img)
-            self.master.after(3000, self.flip_card)
+            self.timer = self.master.after(3000, self.flip_card)
         else:
             self.update_canvas("Well done!", "All words were reviewed.", self.card_front_img)
 
@@ -53,6 +61,7 @@ class FlashCardApp:
     def handle_right_answer(self):
         try:
             self.words.remove(self.current_card)
+            pd.DataFrame(self.words).to_csv("data/words_to_learn.csv", index=False)
         except ValueError:
             pass
         self.show_card()
