@@ -6,7 +6,7 @@ params = {
     'type': 'boolean'
 }
 
-def fetch_questions():
+def fetch_questions() -> list:
     response = requests.get("https://opentdb.com/api.php", params=params)
     questions = response.json().get('results', [])
     question_list = [{'question': q['question'], 'correct_answer': q['correct_answer']} for q in questions]
