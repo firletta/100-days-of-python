@@ -28,7 +28,7 @@ class QuizInterface:
         for image_file, command, column in button_info:
             image = PhotoImage(file=image_file)
             button = Button(image=image, highlightthickness=0, command=command)
-            button.image = image  # Keep a reference.
+            button.image = image
             button.grid(row=2, column=column)
             self.buttons.append(button)
 
