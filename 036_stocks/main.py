@@ -16,11 +16,13 @@ def main():
 
     price_change = alpha_vantage.get_stock_price_change(SYMBOL)
 
-    if price_change and abs(price_change) >= 0:
-        news_article = news_api.get_news(keyword=NAME)
+    if price_change and abs(price_change) >= 5:
+        news_articles = news_api.get_news(keyword=NAME)
 
-    if news_article:
-        message = f"{SYMBOL}: {"🔺" if price_change > 0 else "🔻"}{abs(price_change):.2f}%\n**{news_article["title"]}**\n{news_article["description"]}\n\n"
+    if news_articles:
+        message = f"{SYMBOL}: {"🔺" if price_change > 0 else "🔻"}{abs(price_change):.2f}%\n\n"
+        for article in news_articles:
+            message += f"**{article["title"]}**\n{article["description"]}\n{article['url']}\n\n"
         twilio.send_sms(message=message, to_phone_number=MY_PHONE_NUMBER)
 
 
