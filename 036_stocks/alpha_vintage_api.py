@@ -10,11 +10,11 @@ class AlphaVantageAPI:
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
-            time_series = data.get('Time Series (Daily)', {})
+            time_series = data.get("Time Series (Daily)", {})
             latest_date = list(time_series.keys())[0]
-            latest_close = float(time_series[latest_date]['4. close'])
+            latest_close = float(time_series[latest_date]["4. close"])
             previous_date = list(time_series.keys())[1]
-            previous_close = float(time_series[previous_date]['4. close'])
+            previous_close = float(time_series[previous_date]["4. close"])
             price_change = ((latest_close - previous_close) / previous_close) * 100
             return price_change
         else:

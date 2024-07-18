@@ -10,7 +10,7 @@ class NewsAPI:
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
-            articles = data.get('articles', [])
+            articles = data.get("articles", [])
             return articles[:1][0]
         else:
             print("Error fetching news data. Status Code:", response.status_code)

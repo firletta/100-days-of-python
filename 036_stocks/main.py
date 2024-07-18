@@ -20,7 +20,7 @@ def main():
         news_article = news_api.get_news(keyword=NAME)
 
     if news_article:
-        message = f"{SYMBOL}: {'🔺' if price_change > 0 else '🔻'}{abs(price_change):.2f}%\n**{news_article['title']}**\n{news_article['description']}\n\n"
+        message = f"{SYMBOL}: {"🔺" if price_change > 0 else "🔻"}{abs(price_change):.2f}%\n**{news_article["title"]}**\n{news_article["description"]}\n\n"
         twilio.send_sms(message=message, to_phone_number=MY_PHONE_NUMBER)
 
 
